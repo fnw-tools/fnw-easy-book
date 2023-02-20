@@ -15,7 +15,7 @@ class NoCacheMdHandler(SimpleHTTPRequestHandler):
     super().__init__(*args,directory=directory,**kwarg)
   
   def end_headers(self):
-    if self.path[-3:] == '.md':
+    if self.path[-3:] == '.md' or self.path[-12:] == '/config.json':
       self.send_my_headers()
     SimpleHTTPRequestHandler.end_headers(self)
   
