@@ -52,7 +52,7 @@ if __name__ == '__main__':
     
     kv = sorted([[k,v] for k,v in cfg.items() if k != 'checksum' and isinstance(v,(int,str,list))])
     kv = json.dumps(kv,indent=None,separators=(',',':')).encode('utf-8')
-    cfg['checksum'] = hashlib.sha256(kv).hexdigest()
+    cfg['checksum'] = hashlib.sha256(b'easy_book:' + kv).hexdigest()
     
     with open(json_file,'wt') as f2:
       json.dump(cfg,f2,indent=2)
