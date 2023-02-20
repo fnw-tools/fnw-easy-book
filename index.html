@@ -238,10 +238,15 @@ window.addEventListener('load', function() {
       ele.setAttribute('content',s);
       document.head.appendChild(ele);
     }
-    
     s = data.ver;
-    if (s && typeof s == 'string')
+    if (s && typeof s == 'string') {
       site_prop.doc_ver = s;
+      let ele = document.createElement('meta');
+      ele.setAttribute('name','version');
+      ele.setAttribute('content',s);
+      document.head.appendChild(ele);
+    }
+    
     s = data.checksum;
     if (s && typeof s == 'string')
       site_prop.checksum = s;
