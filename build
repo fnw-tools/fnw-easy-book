@@ -50,7 +50,8 @@ if __name__ == '__main__':
     files = sorted(scan_files())
     cfg['files'] = files
     
-    kv = sorted([[k,v] for k,v in cfg.items() if k != 'checksum' and isinstance(v,(int,str,list))])
+    available_type = (int,str,list)   # not includes float, since it may differ on same value when CPU precision different
+    kv = sorted([[k,v] for k,v in cfg.items() if k != 'checksum' and isinstance(v,available_type)])
     kv = json.dumps(kv,indent=None,separators=(',',':')).encode('utf-8')
     cfg['checksum'] = hashlib.sha256(b'easy_book:' + kv).hexdigest()
     
