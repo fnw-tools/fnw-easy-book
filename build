@@ -24,7 +24,7 @@ if __name__ == '__main__':
   if '--help' in argv:
     print('Usage: python3 build [--help] [--title title] [--author author] [--desc desc] [--keywords keywords] [--ver ver]\n')
   else:
-    cfg_items = ['title','author','desc','keywords','ver']
+    cfg_items = ['title','author','desc','keywords','ver','quoto']
     cfg = dict([(k,'') for k in cfg_items])
     
     json_file = os.path.join(base_dir,'config.json')
@@ -32,8 +32,8 @@ if __name__ == '__main__':
       with open(json_file,'rt') as f:
         cfg2 = json.load(f)
         for k in cfg_items:
-          v = cfg2.get(k)
-          if v: cfg[k] = v
+          v = cfg2.get(k,None)
+          if v is not None: cfg[k] = v
     
     idx = 0; n = len(argv)
     while idx < n:

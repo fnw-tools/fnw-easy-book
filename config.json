@@ -4,6 +4,7 @@
   "desc": "",
   "keywords": "",
   "ver": "",
+  "quoto": 1,
   "files": [
     "0. \u76ee\u5f55",
     "1. \u529f\u80fd\u7b80\u4ecb",
@@ -13,5 +14,5 @@
     "2.3 \u6784\u5efa\u7535\u5b50\u4e66\u5e76\u53d1\u5e03",
     "3. \u5176\u5b83"
   ],
-  "checksum": "b05f45a0b5dd7d0c3d8d05ee7bc90a3aed228323127925b79e16eedcd697c07a"
+  "checksum": "c5425c5ad7cfd7e65b04f8837d0ff1488266fba75d044c35d63e8acd990e567b"
 }
