@@ -139,11 +139,10 @@ window.addEventListener('load', function() {
   let mdNavNode  = document.querySelector('#filelist-tab');
   let viewerNode = document.querySelector('#viewer-root');
   
-  function generateNavlist() {
+  function generateNavlist(cfg) {
+    let md_files = cfg.files || [];
     let node = $('#filelist-tab');
     let s = '';
-    let cfg = document.body.fns_config || {};
-    let md_files = cfg.files || [];
     
     md_files.forEach( (item, idx) => {
       let currFile = _markdown.utils.escapeHtml(item);
@@ -271,8 +270,8 @@ window.addEventListener('load', function() {
       MD_TAGS.push(s);
     });
     
-    generateNavlist();
     document.body.fns_config = data;
+    generateNavlist(data);
     
     setTimeout( () => {
       _last_md_tag = location.hash.slice(1);
