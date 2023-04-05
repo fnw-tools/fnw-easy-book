@@ -87,10 +87,8 @@ _markdown.renderer.rules.code_inline = function(tokens, idx, options, env, rende
     _markdown.utils.escapeHtml(token.content) + '</code>';
 };
 
-var md_files = [];
-var md_tags  = [];
-
-var last_md_tag = '';
+var MD_TAGS = [];
+var _last_md_tag = '';
 
 function wait__(promise_obj, wait) {
   var abort_fn = null;
@@ -124,15 +122,15 @@ function getMdFileList(retry_num, callback) {
 
 function jumpToPage(off) {
   if (off == 0) {  // go home
-    if (md_tags.length) location.hash = '#' + md_tags[0];
+    if (MD_TAGS.length) location.hash = '#' + MD_TAGS[0];
   }
   else {
-    if (!last_md_tag) return;
-    let idx = md_tags.indexOf(last_md_tag);
+    if (!_last_md_tag) return;
+    let idx = MD_TAGS.indexOf(_last_md_tag);
     if (idx >= 0) idx += off;  // off=-1 or off=1
-    if (idx < 0 || idx >= md_tags.length) return;
+    if (idx < 0 || idx >= MD_TAGS.length) return;
     
-    location.hash = '#' + md_tags[idx];
+    location.hash = '#' + MD_TAGS[idx];
   }
 }
 
@@ -144,9 +142,12 @@ window.addEventListener('load', function() {
   function generateNavlist() {
     let node = $('#filelist-tab');
     let s = '';
+    let cfg = document.body.fns_config || {};
+    let md_files = cfg.files || [];
+    
     md_files.forEach( (item, idx) => {
       let currFile = _markdown.utils.escapeHtml(item);
-      let currTag = md_tags[idx];
+      let currTag = MD_TAGS[idx];
       s += '<a class="list-group-item list-group-item-action text-truncate" data-tag="' + currTag + '" role="tab">' + currFile + '</a>';
     });
     node.html(s);
@@ -158,9 +159,10 @@ window.addEventListener('load', function() {
       newTag = newTag.slice(0,-1);
     if (!newTag) return;
     
-    let idx = md_tags.indexOf(newTag);
+    let idx = MD_TAGS.indexOf(newTag);
     if (idx < 0) return;
     
+    let md_files = document.body.fns_config.files;
     wait__(fetch(md_files[idx]+'.md'),30000).then( res => {
       if (res.status == 200)
         return res.text();
@@ -172,7 +174,7 @@ window.addEventListener('load', function() {
       let viewer = $('#md-txt-view');
       viewer.html(_markdown.render(data));
       viewerNode.scrollTop = 0;
-      last_md_tag = newTag;
+      _last_md_tag = newTag;
       
       let mdNodes = mdNavNode.querySelectorAll('a.list-group-item');
       let currNav = mdNodes[idx];
@@ -194,8 +196,8 @@ window.addEventListener('load', function() {
     if (targ.nodeName != 'A') return;
     
     let newTag = $(targ).data('tag') + '';
-    if (!newTag || last_md_tag === newTag) return;
-    let idx = md_tags.indexOf(newTag);
+    if (!newTag || _last_md_tag === newTag) return;
+    let idx = MD_TAGS.indexOf(newTag);
     if (idx < 0) return;
     
     location.hash = '#' + newTag;
@@ -261,23 +263,23 @@ window.addEventListener('load', function() {
       site_prop.checksum = s;
     site_prop.doc_url = location.protocol + '//' + location.host + location.pathname;
     
-    md_files = data.files || [];
-    md_tags = [];
+    MD_TAGS = [];
+    let md_files = data.files || [];
     md_files.forEach( (item, idx) => {
       let s = item.split(' ')[0];
       if (s && s.slice(-1) == '.') s = s.slice(0,-1);  // remove last '.'
-      md_tags.push(s);
+      MD_TAGS.push(s);
     });
     
     generateNavlist();
-    document.body.fns_data = data;
+    document.body.fns_config = data;
     
     setTimeout( () => {
-      last_md_tag = location.hash.slice(1);
+      _last_md_tag = location.hash.slice(1);
       
       let idx = -1;
-      if (last_md_tag) idx = md_tags.indexOf(last_md_tag);
-      if (idx < 0 && md_tags.length)
+      if (_last_md_tag) idx = MD_TAGS.indexOf(_last_md_tag);
+      if (idx < 0 && MD_TAGS.length)
         jumpToPage(0);
       else onHashChange();  // pseudo trigger event
     }, 600);

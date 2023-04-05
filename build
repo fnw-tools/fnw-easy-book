@@ -24,16 +24,13 @@ if __name__ == '__main__':
   if '--help' in argv:
     print('Usage: python3 build [--help] [--title title] [--author author] [--desc desc] [--keywords keywords] [--ver ver]\n')
   else:
-    cfg_items = ['title','author','desc','keywords','ver','quoto']
-    cfg = dict([(k,'') for k in cfg_items])
+    cfg_items = [('title',''),('author',''),('desc',''),('keywords',''),('ver',''),('quoto','easy-book')]
+    cfg = dict(cfg_items)
     
     json_file = os.path.join(base_dir,'config.json')
     if os.path.isfile(json_file):
       with open(json_file,'rt') as f:
-        cfg2 = json.load(f)
-        for k in cfg_items:
-          v = cfg2.get(k,None)
-          if v is not None: cfg[k] = v
+        cfg.update(json.load(f))
     
     idx = 0; n = len(argv)
     while idx < n:
@@ -41,9 +38,9 @@ if __name__ == '__main__':
       idx += 1
       
       if idx < n:
-        for k in cfg_items:
+        for k,v in cfg_items:  # scan config-able items
           if item == k:
-            cfg[k] = argv[idx]
+            cfg[item] = argv[idx]
             idx += 1
             break
     
@@ -53,7 +50,7 @@ if __name__ == '__main__':
     available_type = (int,str,list)   # not includes float, since it may differ on same value when CPU precision different
     kv = sorted([[k,v] for k,v in cfg.items() if k != 'checksum' and isinstance(v,available_type)])
     kv = json.dumps(kv,indent=None,separators=(',',':')).encode('utf-8')
-    cfg['checksum'] = hashlib.sha256(b'easy_book:' + kv).hexdigest()
+    cfg['checksum'] = hashlib.sha256(b'fns_book:' + kv).hexdigest()
     
     with open(json_file,'wt') as f2:
       json.dump(cfg,f2,indent=2)
