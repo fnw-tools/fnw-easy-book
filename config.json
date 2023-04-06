@@ -3,7 +3,7 @@
   "author": "",
   "desc": "",
   "keywords": "",
-  "ver": "0.1.1",
+  "ver": "0.1.2",
   "quoto": "easy-book",
   "show_quoto": 1,
   "files": [
@@ -16,5 +16,5 @@
     "3. \u7ba1\u7406\u95ee\u7b54\u6846",
     "4. \u5176\u5b83"
   ],
-  "checksum": "98ce211827a6e0a25b3516ebc8efeb0e7aa82cf4a5c374cb6def1c5dc9ee2493"
+  "checksum": "651a9ac2eda4f082bfbdb8085773e94968cecba267c59662aa5a06f232191a28"
 }
