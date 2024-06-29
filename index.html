@@ -4,8 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="favicon.ico">
-<link href="https://www.fn-share.com/www/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://www.fn-share.com/www/css/highlightjs.min.css" rel="stylesheet">
+<link href="//www.fn-share.com/www/css/bootstrap.min.css" rel="stylesheet">
+<link href="//www.fn-share.com/www/css/highlightjs.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -47,6 +47,7 @@
 
 <div class="container-fluid p-2"><div class="row">
   <div class="col-sm-4 col-md-3 pb-4 pe-0" id="md-nav-root" style="height:calc(100vh - 1rem); overflow-y:auto;">
+    <div class="text-center" id="show-loading"><img src="//www.fn-share.com/www/img/loading.gif" style="width:128px; height:128px;"></div>
     <div class="list-group small" id="filelist-tab" role="tablist"></div>
   </div>
   <div class="col-sm-8 col-md-9 pe-3" id="viewer-root" style="height:calc(100vh - 1rem); overflow-y:auto;">
@@ -61,11 +62,11 @@
   </div>
 </div></div>
 
-<script src="https://www.fn-share.com/www/js/jquery-3.6.0.slim.min.js"></script>
-<script src="https://www.fn-share.com/www/js/highlight.min.js"></script>
-<script src="https://www.fn-share.com/www/js/bootstrap.min.js"></script>
-<script src="https://www.fn-share.com/www/js/markdown-it.min.js"></script>
-<script src="https://www.fn-share.com/www/js/markdown-it-attrs.min.js"></script>
+<script src="//www.fn-share.com/www/js/jquery-3.6.0.slim.min.js"></script>
+<script src="//www.fn-share.com/www/js/highlight.min.js"></script>
+<script src="//www.fn-share.com/www/js/bootstrap.min.js"></script>
+<script src="//www.fn-share.com/www/js/markdown-it.min.js"></script>
+<script src="//www.fn-share.com/www/js/markdown-it-attrs.min.js"></script>
 
 <script>
 var _markdown = markdownit( {
@@ -287,6 +288,7 @@ window.addEventListener('load', function() {
     });
     
     document.body.fns_config = data;
+    $('#show-loading').addClass('d-none');
     generateNavlist(data);
     
     setTimeout( () => {
@@ -302,7 +304,7 @@ window.addEventListener('load', function() {
 });
 </script>
 
-<script src="https://www.fn-share.com/www/tools/easy_book/nav_bar.0.1.js" defer></script>
+<script src="//www.fn-share.com/www/tools/easy_book/nav_bar.0.1.js" defer></script>
 
 </body>
 </html>
